@@ -135,14 +135,24 @@ public class RoutingTest {
                 Planner.getInstance().plan(
                         StrategyFactoryEnum.SHORTEST.getInstance(), trip));
     }
+    
+    @Test
+    public void nonStopFromMSPtoDBU() {
+        Trip trip = new Trip(airports.get("MSP"), "DBU");
+        assertEquals(
+                "MSP->DBU",
+                Planner.getInstance().plan(
+                        StrategyFactoryEnum.SHORTEST.getInstance(), trip));
+    }
 
     @Before
     public void setupAirports() {
 
-        String[] ports = { "h", "b", "a", "c", "e", "d", "f", "g" };
+        String[] ports = { "h", "b", "a", "c", "e", "d", "f", "g", "MSP", "FFK", "AMS", "DBU" };
         String[][] connections = { { "h", "b" }, { "b", "c" }, { "b", "a" },
                 { "a", "f" }, { "c", "d" }, { "c", "e" }, { "e", "b" },
-                { "d", "e" } };
+                { "d", "e" }, {"MSP", "FFK"}, {"MSP", "AMS"}, {"MSP", "DBU"}, {"FFK", "AMS"},
+                {"AMS", "FFK"}, {"AMS","MSP"}, {"AMS", "DBU"}, {"DBU", "AMS"}, {"DBU", "MSP"}};
         airports = new HashMap<String, Airport>();
         Arrays.stream(ports).forEach(p -> airports.put(p, new Airport(p)));
         Arrays.stream(connections).forEach(
