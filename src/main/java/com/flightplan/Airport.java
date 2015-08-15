@@ -24,6 +24,10 @@ public class Airport {
         }
         this.connections.add(destinationAirport);
     }
+    
+    public boolean hasConnection(){
+        return !Util.isEmpty(getConnections());
+    }
 
     public boolean equalsName(String name) {
         return this.name.equalsIgnoreCase(name);

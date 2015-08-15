@@ -48,6 +48,16 @@ public class AirportTest {
     public void shouldNotGetANonConnection() {
         assertTrue(!airport.getConnections().contains(airport));
     }
+    
+    @Test
+    public void hasConnection() {
+        assertTrue(airport.hasConnection());
+    }
+    
+    @Test
+    public void hasNoConnection() {
+        assertTrue(!(new Airport("a").hasConnection()));
+    }
 
     @Test
     public void shouldMatchName() {

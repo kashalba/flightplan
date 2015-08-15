@@ -1,5 +1,7 @@
 package com.flightplan;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 public class Planner {
@@ -19,21 +21,26 @@ public class Planner {
         return (instance == null) ? new Planner() : instance;
     }
 
-    public String plan(Strategy strategy, Trip trip) {
-        Queue<Airport> route = strategy.find(trip);
-        return trace(route);
+    public Queue<String> plan(Strategy strategy, Trip trip) {
+        List<Queue<Airport>> routes = strategy.find(trip);
+        return trace(routes);
     }
 
-    private String trace(Queue<Airport> route) {
+    private Queue<String> trace(List<Queue<Airport>> routes) {
         StringBuilder sb = new StringBuilder("");
-        while (!route.isEmpty()) {
-            sb.append(route.poll().getName());
-            sb.append(Util.ROUTE_SEPARATOR);
+        Queue<String> options = new LinkedList<String>();
+        for(Queue<Airport> route : routes){
+            sb = new StringBuilder("");
+            while (!route.isEmpty()) {
+                sb.append(route.poll().getName());
+                sb.append(Util.ROUTE_SEPARATOR);
+            }
+            while (sb.lastIndexOf(Util.ROUTE_SEPARATOR) == sb.length()
+                    - Util.ROUTE_SEPARATOR.length()) {
+                sb.delete(sb.length() - Util.ROUTE_SEPARATOR.length(), sb.length());
+            }
+            options.add(sb.toString());
         }
-        while (sb.lastIndexOf(Util.ROUTE_SEPARATOR) == sb.length()
-                - Util.ROUTE_SEPARATOR.length()) {
-            sb.delete(sb.length() - Util.ROUTE_SEPARATOR.length(), sb.length());
-        }
-        return sb.toString();
+        return options;
     }
 }
