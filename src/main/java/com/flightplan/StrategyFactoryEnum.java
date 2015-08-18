@@ -1,10 +1,15 @@
 package com.flightplan;
 
 public enum StrategyFactoryEnum {
-    SHORTEST {
+    SHORTEST_BFS {
         @Override
         public Strategy getInstance() {
-            return new ShortestStrategy();
+            return new ShortestBFSStrategy();
+        }
+    },SHORTEST_DFS {
+        @Override
+        public Strategy getInstance() {
+            return new ShortestDFSStrategy();
         }
     };
 

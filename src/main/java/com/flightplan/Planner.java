@@ -18,11 +18,20 @@ public class Planner {
 
     // just avoiding "if", assuming replacing it with ternary is okay :-)
     private static synchronized Planner createInstance() {
-        return (instance == null) ? new Planner() : instance;
+        instance = (instance == null) ? new Planner() : instance;
+        return instance;
     }
 
     public Queue<String> plan(Strategy strategy, Trip trip) {
-        List<Queue<Airport>> routes = strategy.find(trip);
+        Queue<Airport> queue = new LinkedList<Airport>();
+        Queue<Queue<Airport>> graph = new LinkedList<Queue<Airport>>();
+        
+        queue.add(trip.getDeparture());
+        graph.add(queue);           
+        List<Queue<Airport>> routes = new LinkedList<Queue<Airport>>();       
+        strategy.find(trip, graph, routes);        
+        boolean wrkArnd4If = routes.isEmpty() && routes.add(new LinkedList<Airport>());  
+        wrkArnd4If = wrkArnd4If || routes.isEmpty();
         return trace(routes);
     }
 

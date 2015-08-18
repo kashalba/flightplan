@@ -23,21 +23,21 @@ public class RoutingTest {
     @Test
     public void twoStopsFromHtoE() {
         Trip trip = new Trip(airports.get("h"), "e");
-        Queue<String> queue = Planner.getInstance().plan(StrategyFactoryEnum.SHORTEST.getInstance(), trip);
+        Queue<String> queue = Planner.getInstance().plan(StrategyFactoryEnum.SHORTEST_BFS.getInstance(), trip);
         assertEquals("h->b->c->e",queue.poll());
     }
 
     @Test
     public void nonStopFromCtoE() {
         Trip trip = new Trip(airports.get("c"), "e");
-        Queue<String> queue = Planner.getInstance().plan(StrategyFactoryEnum.SHORTEST.getInstance(), trip);
+        Queue<String> queue = Planner.getInstance().plan(StrategyFactoryEnum.SHORTEST_BFS.getInstance(), trip);
         assertEquals("c->e",queue.poll());
     }
 
     @Test
     public void nonStopFromAtoF() {
         Trip trip = new Trip(airports.get("a"), "f");
-        Queue<String> queue = Planner.getInstance().plan(StrategyFactoryEnum.SHORTEST.getInstance(), trip);
+        Queue<String> queue = Planner.getInstance().plan(StrategyFactoryEnum.SHORTEST_BFS.getInstance(), trip);
         assertEquals(
                 "a->f",queue.poll());
     }
@@ -45,7 +45,7 @@ public class RoutingTest {
     @Test
     public void oneStopFromCtoB() {
         Trip trip = new Trip(airports.get("c"), "b");
-        Queue<String> queue = Planner.getInstance().plan(StrategyFactoryEnum.SHORTEST.getInstance(), trip);
+        Queue<String> queue = Planner.getInstance().plan(StrategyFactoryEnum.SHORTEST_BFS.getInstance(), trip);
         assertEquals(
                 "c->e->b",
                 queue.poll());
@@ -54,7 +54,7 @@ public class RoutingTest {
     @Test
     public void threeStopsFromCtoF() {
         Trip trip = new Trip(airports.get("c"), "f");
-        Queue<String> queue = Planner.getInstance().plan(StrategyFactoryEnum.SHORTEST.getInstance(), trip);
+        Queue<String> queue = Planner.getInstance().plan(StrategyFactoryEnum.SHORTEST_BFS.getInstance(), trip);
         assertEquals(
                 "c->e->b->a->f",
                 queue.poll());
@@ -63,7 +63,7 @@ public class RoutingTest {
     @Test
     public void threeStopsFromDtoF() {
         Trip trip = new Trip(airports.get("d"), "f");
-        Queue<String> queue = Planner.getInstance().plan(StrategyFactoryEnum.SHORTEST.getInstance(), trip);
+        Queue<String> queue = Planner.getInstance().plan(StrategyFactoryEnum.SHORTEST_BFS.getInstance(), trip);
         assertEquals(
                 "d->e->b->a->f",
                 queue.poll());
@@ -72,7 +72,7 @@ public class RoutingTest {
     @Test
     public void twoStopsFromHtoD() {
         Trip trip = new Trip(airports.get("h"), "d");
-        Queue<String> queue = Planner.getInstance().plan(StrategyFactoryEnum.SHORTEST.getInstance(), trip);
+        Queue<String> queue = Planner.getInstance().plan(StrategyFactoryEnum.SHORTEST_BFS.getInstance(), trip);
         assertEquals(
                 "h->b->c->d",
                 queue.poll());
@@ -81,7 +81,7 @@ public class RoutingTest {
     @Test
     public void twoStopsFromDtoC() {
         Trip trip = new Trip(airports.get("d"), "c");
-        Queue<String> queue = Planner.getInstance().plan(StrategyFactoryEnum.SHORTEST.getInstance(), trip);
+        Queue<String> queue = Planner.getInstance().plan(StrategyFactoryEnum.SHORTEST_BFS.getInstance(), trip);
         assertEquals(
                 "d->e->b->c",
                 queue.poll());
@@ -90,7 +90,7 @@ public class RoutingTest {
     @Test
     public void twoStopsFromHtoF() {
         Trip trip = new Trip(airports.get("h"), "f");
-        Queue<String> queue = Planner.getInstance().plan(StrategyFactoryEnum.SHORTEST.getInstance(), trip);
+        Queue<String> queue = Planner.getInstance().plan(StrategyFactoryEnum.SHORTEST_BFS.getInstance(), trip);
         assertEquals(
                 "h->b->a->f",
                 queue.poll());
@@ -99,7 +99,7 @@ public class RoutingTest {
     @Test
     public void noFlightFromGtoH() {
         Trip trip = new Trip(airports.get("g"), "h");
-        Queue<String> queue = Planner.getInstance().plan(StrategyFactoryEnum.SHORTEST.getInstance(), trip);
+        Queue<String> queue = Planner.getInstance().plan(StrategyFactoryEnum.SHORTEST_BFS.getInstance(), trip);
         assertEquals(
                 "",
                 queue.poll());
@@ -108,7 +108,7 @@ public class RoutingTest {
     @Test
     public void noFlightFromBtoG() {
         Trip trip = new Trip(airports.get("b"), "g");
-        Queue<String> queue = Planner.getInstance().plan(StrategyFactoryEnum.SHORTEST.getInstance(), trip);
+        Queue<String> queue = Planner.getInstance().plan(StrategyFactoryEnum.SHORTEST_BFS.getInstance(), trip);
         assertEquals(
                 "",
                 queue.poll());
@@ -117,7 +117,7 @@ public class RoutingTest {
     @Test
     public void noFlightFromFtoH() {
         Trip trip = new Trip(airports.get("f"), "h");
-        Queue<String> queue = Planner.getInstance().plan(StrategyFactoryEnum.SHORTEST.getInstance(), trip);
+        Queue<String> queue = Planner.getInstance().plan(StrategyFactoryEnum.SHORTEST_BFS.getInstance(), trip);
         assertEquals(
                 "",
                 queue.poll());
@@ -126,7 +126,7 @@ public class RoutingTest {
     @Test
     public void noFlightFromBtoH() {
         Trip trip = new Trip(airports.get("b"), "h");
-        Queue<String> queue = Planner.getInstance().plan(StrategyFactoryEnum.SHORTEST.getInstance(), trip);
+        Queue<String> queue = Planner.getInstance().plan(StrategyFactoryEnum.SHORTEST_BFS.getInstance(), trip);
         assertEquals(
                 "",
                 queue.poll());
@@ -135,7 +135,7 @@ public class RoutingTest {
     @Test
     public void nonStopFromMSPtoDBU() {
         Trip trip = new Trip(airports.get("MSP"), "DBU");
-        Queue<String> queue = Planner.getInstance().plan(StrategyFactoryEnum.SHORTEST.getInstance(), trip);
+        Queue<String> queue = Planner.getInstance().plan(StrategyFactoryEnum.SHORTEST_BFS.getInstance(), trip);
         assertEquals(
                 "MSP->DBU",queue.poll());
     }
@@ -143,7 +143,16 @@ public class RoutingTest {
     @Test
     public void topThreefromMSPtoDBU() {
         Trip trip = new Trip(airports.get("MSP"), "DBU");
-        Queue<String> queue = Planner.getInstance().plan(StrategyFactoryEnum.SHORTEST.getInstance(), trip);
+        Queue<String> queue = Planner.getInstance().plan(StrategyFactoryEnum.SHORTEST_BFS.getInstance(), trip);
+        assertEquals("MSP->DBU", queue.poll());
+        assertEquals("MSP->AMS->DBU", queue.poll());
+        assertEquals("MSP->FFK->AMS->DBU", queue.poll());
+    }
+    
+    @Test
+    public void dfsTopThreefromMSPtoDBU() {
+        Trip trip = new Trip(airports.get("MSP"), "DBU");
+        Queue<String> queue = Planner.getInstance().plan(StrategyFactoryEnum.SHORTEST_DFS.getInstance(), trip);
         assertEquals("MSP->DBU", queue.poll());
         assertEquals("MSP->AMS->DBU", queue.poll());
         assertEquals("MSP->FFK->AMS->DBU", queue.poll());
